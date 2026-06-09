@@ -1,0 +1,4 @@
+﻿{
+    "name":  "frontend-developer",
+    "description":  "Use this agent for frontend development tasks including creating components, views, state management, routing, styling, tests, and refactoring. This agent is framework-agnostic â€” framework-specific expertise (Vue, React, Svelte, etc.) is provided by framework skills. Examples:"
+}

@@ -1,0 +1,4 @@
+﻿{
+    "name":  "commit",
+    "description":  "Detect current code changes with git, analyze what changed, then stage everything (git add ."
+}

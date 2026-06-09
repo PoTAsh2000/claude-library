@@ -1,0 +1,4 @@
+﻿{
+    "name":  "performance",
+    "description":  "Performance standards covering database queries, pagination, caching, lazy loading, timeouts, and connection pooling."
+}

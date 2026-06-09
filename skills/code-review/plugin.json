@@ -1,0 +1,4 @@
+﻿{
+    "name":  "code-review",
+    "description":  "Run a structured code review on recent changes, a specific file/directory, or a commit range. Produces severity-rated findings and a verdict. Invoked with /review."
+}

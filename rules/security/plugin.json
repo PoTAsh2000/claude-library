@@ -1,0 +1,4 @@
+﻿{
+    "name":  "security",
+    "description":  "Security standards that apply to all code. Covers secrets management, input validation, SQL injection prevention, data exposure, and transport security."
+}

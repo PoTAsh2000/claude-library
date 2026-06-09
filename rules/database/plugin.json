@@ -1,0 +1,4 @@
+﻿{
+    "name":  "database",
+    "description":  "SQL database design standards covering normalization, key design, index policy, naming conventions, data types, constraints, and schema documentation requirements."
+}
