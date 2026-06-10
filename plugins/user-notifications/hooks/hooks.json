@@ -1,11 +1,12 @@
 {
+    "description": "Plays a sound when Claude Code requires user attention.",
     "hooks": {
         "Stop": [
             {
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "powershell -NonInteractive -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.ps1\" -event stop -pluginRoot \"${CLAUDE_PLUGIN_ROOT}\""
+                        "command": "python \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.py\" stop"
                     }
                 ]
             }
@@ -16,7 +17,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "powershell -NonInteractive -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.ps1\" -event permission -pluginRoot \"${CLAUDE_PLUGIN_ROOT}\""
+                        "command": "python \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.py\" permission"
                     }
                 ]
             },
@@ -25,7 +26,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "powershell -NonInteractive -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.ps1\" -event permission -pluginRoot \"${CLAUDE_PLUGIN_ROOT}\""
+                        "command": "python \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.py\" permission"
                     }
                 ]
             },
@@ -34,7 +35,7 @@
                 "hooks": [
                     {
                         "type": "command",
-                        "command": "powershell -NonInteractive -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.ps1\" -event idle -pluginRoot \"${CLAUDE_PLUGIN_ROOT}\""
+                        "command": "python \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.py\" idle"
                     }
                 ]
             }
