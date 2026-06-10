@@ -71,6 +71,12 @@
             "description": "[HOOK] Auto-converts Excel files (.xlsx/.xls/.xlsm) to markdown when Claude reads them. Activates automatically after plugin install.",
             "source": "./hooks/excel-reader",
             "category": "hooks"
+        },
+        {
+            "name": "user-notifications",
+            "description": "[PLUGIN] Plays a sound when Claude Code requires user attention — permission prompts, turn completions, and idle prompts.",
+            "source": "./plugins/user-notifications",
+            "category": "plugins"
         }
     ]
 }

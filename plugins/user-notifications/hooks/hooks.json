@@ -1,0 +1,43 @@
+{
+    "hooks": {
+        "Stop": [
+            {
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "powershell -NonInteractive -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.ps1\" -event stop -pluginRoot \"${CLAUDE_PLUGIN_ROOT}\""
+                    }
+                ]
+            }
+        ],
+        "Notification": [
+            {
+                "matcher": "permission_prompt",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "powershell -NonInteractive -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.ps1\" -event permission -pluginRoot \"${CLAUDE_PLUGIN_ROOT}\""
+                    }
+                ]
+            },
+            {
+                "matcher": "elicitation_dialog",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "powershell -NonInteractive -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.ps1\" -event permission -pluginRoot \"${CLAUDE_PLUGIN_ROOT}\""
+                    }
+                ]
+            },
+            {
+                "matcher": "idle_prompt",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "powershell -NonInteractive -File \"${CLAUDE_PLUGIN_ROOT}/hooks/notify.ps1\" -event idle -pluginRoot \"${CLAUDE_PLUGIN_ROOT}\""
+                    }
+                ]
+            }
+        ]
+    }
+}
