@@ -1,238 +1,70 @@
 {
-    "$schema":  "https://anthropic.com/claude-code/marketplace.schema.json",
-    "name":  "thomas-local-library",
-    "description":  "Personal local tool library for Claude Code projects",
-    "owner":  {
-                  "name":  "Thomas Arensman"
-              },
-    "plugins":  [
-                    {
-                        "name":  "apache-camel",
-                        "description":  "Expert guidance and automation for programming in Java with the Apache Camel integration framework, with a focus on Spring Boot integration. Covers route building (Java DSL, YAML DSL), Enterprise Integration Patterns (EIPs), CamelContext lifecycle, component configuration, error handling (Dead Letter Channel, onException, retries), data transformation (marshal/unmarshal, type converters, data formats), testing (MockEndpoint, AdviceWith, ProducerTemplate, camel-test-spring-junit5), and production deployment. Provides deep guidance on core distributed systems components: JMS, HTTP, REST, master/singleton routes, ZooKeeper leader election, and all 300+ official Camel components. Synthesises techniques from the official Apache Camel documentation, Camel in Action (Ibsen \u0026 Anstey), and Enterprise Integration Patterns (Hohpe \u0026 Woolf). Use this skill whenever the user is building, debugging, configuring, or architecting a Camel application â€” integration routes, message-driven microservices, protocol bridges, data pipelines, ETL flows, or any Java project using Apache Camel with Spring Boot. Also use when the user asks about Camel routes, EIPs, Camel components, message routing, message transformation, or integration patterns, even if they don\u0027t explicitly mention \"Camel.\" Downstream projects (Camel K, Karavan, JBoss Fuse) are out of scope â€” only the core Camel monorepo is covered.",
-                        "source":  "./skills/apache-camel",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "brainstorm",
-                        "description":  "Facilitate a structured brainstorming session for features, architecture decisions, or product ideas. Generates, researches, and evaluates multiple approaches. Invoked with /brainstorm.",
-                        "source":  "./skills/brainstorm",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "code-review",
-                        "description":  "Run a structured code review on recent changes, a specific file/directory, or a commit range. Produces severity-rated findings and a verdict. Invoked with /review.",
-                        "source":  "./skills/code-review",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "commit",
-                        "description":  "Detect current code changes with git, analyze what changed, then stage everything (git add .",
-                        "source":  "./skills/commit",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "database-design",
-                        "description":  "Design or review a relational database schema using normalization forms (1NF through 4NF), then apply physical design decisions and produce documented DDL. Invoked with /database-design.",
-                        "source":  "./skills/database-design",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "incident-response",
-                        "description":  "Structured incident response workflow for diagnosing and resolving production or development issues. Produces a post-incident report. Invoked with /incident.",
-                        "source":  "./skills/incident-response",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "intake-workflow",
-                        "description":  "AI intake workflow: haalt automatisch openstaande Jira-tickets en ongelezen Outlook-emails op, toont een gecombineerd overzicht, en verwerkt Ã©Ã©n ges",
-                        "source":  "./skills/intake-workflow",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "jira",
-                        "description":  "Fetch and analyze a Jira Cloud ticket.",
-                        "source":  "./skills/jira",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "mapper",
-                        "description":  "Generate a Java mapper/translator method that maps fields from a source model to a target model",
-                        "source":  "./skills/mapper",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "maven-release",
-                        "description":  "Skill: maven-release",
-                        "source":  "./skills/maven-release",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "mvn-release",
-                        "description":  "\"Trigger: \u0027make a release\u0027, \u0027maven release\u0027, \u0027do a release build\u0027, \u0027mvn release\u0027. Automates the full Maven release lifecycle: pre-flight checks, validation build, maven release:prepare, git push, tag checkout, and final build.\"",
-                        "source":  "./skills/mvn-release",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "readme",
-                        "description":  "This skill should be used when the user asks to \"generate a README\", \"create a README\", \"update the README\", \"make a README.",
-                        "source":  "./skills/readme",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "rfc",
-                        "description":  "Create an Architecture Decision Record (ADR) or RFC document for a technical decision. Researches alternatives and produces a structured decision document. Invoked with /rfc.",
-                        "source":  "./skills/rfc",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "spring-boot",
-                        "description":  "Spring Boot framework conventions, patterns, and coding standards. Automatically used by the backend-developer agent when working on Spring Boot projects. Activates when code imports org.springframework, uses @SpringBootApplication, or project has pom.xml with spring-boot-starter dependencies.",
-                        "source":  "./skills/spring-boot",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "sprint-planning",
-                        "description":  "Plan a development sprint by breaking work into tasks, estimating effort, sequencing dependencies, and assigning to specialist agents. Invoked with /sprint.",
-                        "source":  "./skills/sprint-planning",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "tech-debt",
-                        "description":  "Assess and catalog technical debt in the codebase. Scans for TODOs, outdated dependencies, test gaps, and code smells. Produces a prioritized debt register. Invoked with /tech-debt.",
-                        "source":  "./skills/tech-debt",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "vue",
-                        "description":  "Vue 3 framework conventions, Composition API patterns, and ecosystem tools. Automatically used by the frontend-developer agent when working on Vue projects. Activates when code imports from \u0027vue\u0027, uses .vue files, or project has vue in package.json dependencies.",
-                        "source":  "./skills/vue",
-                        "category":  "skills"
-                    },
-                    {
-                        "name":  "analyst",
-                        "description":  "Use this agent for requirements gathering, use-case analysis, and technology research. Works with a prompter (customer representative) to convert goals into structured project requirements. Examples:",
-                        "source":  "./agents/analyst",
-                        "category":  "agents"
-                    },
-                    {
-                        "name":  "backend-developer",
-                        "description":  "Use this agent for backend Java development tasks including creating services, processors, transformers, mappers, routes, configurations, tests, and refactoring â€” across any Java project type (Apache Camel, plain Java, Maven modules, etc.). Examples:",
-                        "source":  "./agents/backend-developer",
-                        "category":  "agents"
-                    },
-                    {
-                        "name":  "code-reviewer",
-                        "description":  "Use this agent to review code changes for quality, security, architecture conformance, and requirements traceability. Produces structured review output with severity-rated findings and a clear verdict. Examples:",
-                        "source":  "./agents/code-reviewer",
-                        "category":  "agents"
-                    },
-                    {
-                        "name":  "devops-sre",
-                        "description":  "Use this agent for DevOps and infrastructure tasks including CI/CD pipelines, Docker, Kubernetes, infrastructure-as-code, monitoring, and deployment strategies. Examples:",
-                        "source":  "./agents/devops-sre",
-                        "category":  "agents"
-                    },
-                    {
-                        "name":  "frontend-developer",
-                        "description":  "Use this agent for frontend development tasks including creating components, views, state management, routing, styling, tests, and refactoring. This agent is framework-agnostic â€” framework-specific expertise (Vue, React, Svelte, etc.) is provided by framework skills. Examples:",
-                        "source":  "./agents/frontend-developer",
-                        "category":  "agents"
-                    },
-                    {
-                        "name":  "product-manager",
-                        "description":  "Use this agent for product brainstorming, feature prioritization, user personas, journey maps, PRDs, and competitive analysis. Works upstream of the analyst agent to define product vision. Examples:",
-                        "source":  "./agents/product-manager",
-                        "category":  "agents"
-                    },
-                    {
-                        "name":  "qa-test-engineer",
-                        "description":  "Use this agent to design test strategies, write integration and end-to-end tests, identify edge cases, and create test data fixtures. Thinks adversarially about what can break. Examples:",
-                        "source":  "./agents/qa-test-engineer",
-                        "category":  "agents"
-                    },
-                    {
-                        "name":  "security-reviewer",
-                        "description":  "Use this agent to review code and architecture for security vulnerabilities. Checks for OWASP Top 10, authentication/authorization issues, data exposure risks, and dependency vulnerabilities. Examples:",
-                        "source":  "./agents/security-reviewer",
-                        "category":  "agents"
-                    },
-                    {
-                        "name":  "software-architect",
-                        "description":  "Use this agent to turn project requirements into functional and technical system designs. Produces architecture documents, data models, API designs, and implementation task breakdowns. Examples:",
-                        "source":  "./agents/software-architect",
-                        "category":  "agents"
-                    },
-                    {
-                        "name":  "tech-lead",
-                        "description":  "Use this agent to orchestrate multi-agent workflows for large features, break down initiatives into phased delivery plans, resolve technical disputes, and produce ADRs/RFCs. The entry point for complex cross-cutting work. Examples:",
-                        "source":  "./agents/tech-lead",
-                        "category":  "agents"
-                    },
-                    {
-                        "name":  "technical-writer",
-                        "description":  "Use this agent to write or update technical documentation including API docs, developer guides, architecture overviews, runbooks, and changelogs. Examples:",
-                        "source":  "./agents/technical-writer",
-                        "category":  "agents"
-                    },
-                    {
-                        "name":  "api-design",
-                        "description":  "API design standards for RESTful services covering URL conventions, response formats, status codes, pagination, and documentation requirements.",
-                        "source":  "./rules/api-design",
-                        "category":  "rules"
-                    },
-                    {
-                        "name":  "code-review-standards",
-                        "description":  "Code review process standards covering commit structure, review feedback severity levels, and response expectations.",
-                        "source":  "./rules/code-review-standards",
-                        "category":  "rules"
-                    },
-                    {
-                        "name":  "database",
-                        "description":  "SQL database design standards covering normalization, key design, index policy, naming conventions, data types, constraints, and schema documentation requirements.",
-                        "source":  "./rules/database",
-                        "category":  "rules"
-                    },
-                    {
-                        "name":  "error-handling",
-                        "description":  "Error handling standards: typed errors, no silent swallowing, consistent HTTP shapes, retry patterns.",
-                        "source":  "./rules/error-handling",
-                        "category":  "rules"
-                    },
-                    {
-                        "name":  "frontend-standards",
-                        "description":  "Frontend coding standards that apply regardless of framework. Covers TypeScript, component conventions, CSS, accessibility, and state management.",
-                        "source":  "./rules/frontend-standards",
-                        "category":  "rules"
-                    },
-                    {
-                        "name":  "git-conventions",
-                        "description":  "Git workflow conventions covering commit messages, branch naming, and repository hygiene.",
-                        "source":  "./rules/git-conventions",
-                        "category":  "rules"
-                    },
-                    {
-                        "name":  "orchestration",
-                        "description":  "Multi-agent orchestration conventions: display active agents, assign tasks in planning mode.",
-                        "source":  "./rules/orchestration",
-                        "category":  "rules"
-                    },
-                    {
-                        "name":  "performance",
-                        "description":  "Performance standards covering database queries, pagination, caching, lazy loading, timeouts, and connection pooling.",
-                        "source":  "./rules/performance",
-                        "category":  "rules"
-                    },
-                    {
-                        "name":  "security",
-                        "description":  "Security standards that apply to all code. Covers secrets management, input validation, SQL injection prevention, data exposure, and transport security.",
-                        "source":  "./rules/security",
-                        "category":  "rules"
-                    },
-                    {
-                        "name":  "testing-standards",
-                        "description":  "Testing standards covering test requirements, determinism, naming, coverage targets, and test data practices.",
-                        "source":  "./rules/testing-standards",
-                        "category":  "rules"
-                    }
-                ]
+    "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+    "name": "thomas-local-library",
+    "description": "Personal local tool library for Claude Code projects",
+    "owner": {
+        "name": "Thomas Arensman"
+    },
+    "plugins": [
+        {
+            "name": "code-review",
+            "description": "[SKILL] Run a structured code review on recent changes, a specific file/directory, or a commit range. Produces severity-rated findings and a verdict. Invoked with /review.",
+            "source": "./skills/code-review",
+            "category": "skills"
+        },
+        {
+            "name": "commit",
+            "description": "[SKILL] Detect current code changes with git, analyze what changed, then stage everything.",
+            "source": "./skills/commit",
+            "category": "skills"
+        },
+        {
+            "name": "mapper",
+            "description": "[SKILL] Generate a Java mapper/translator method that maps fields from a source model to a target model.",
+            "source": "./skills/mapper",
+            "category": "skills"
+        },
+        {
+            "name": "readme",
+            "description": "[SKILL] Generate, create, or update README documentation for your project.",
+            "source": "./skills/readme",
+            "category": "skills"
+        },
+        {
+            "name": "backend-developer",
+            "description": "[AGENT] Handle backend Java development tasks including creating services, processors, transformers, mappers, routes, configurations, tests, and refactoring across any Java project type.",
+            "source": "./agents/backend-developer",
+            "category": "agents"
+        },
+        {
+            "name": "frontend-developer",
+            "description": "[AGENT] Handle frontend development tasks including creating components, views, state management, routing, styling, tests, and refactoring. Framework-agnostic with specialized skills for Vue, React, Svelte, etc.",
+            "source": "./agents/frontend-developer",
+            "category": "agents"
+        },
+        {
+            "name": "software-architect",
+            "description": "[AGENT] Turn project requirements into functional and technical system designs. Produces architecture documents, data models, API designs, and implementation task breakdowns.",
+            "source": "./agents/software-architect",
+            "category": "agents"
+        },
+        {
+            "name": "database",
+            "description": "[RULE] SQL database design standards covering normalization, key design, index policy, naming conventions, data types, constraints, and schema documentation requirements.",
+            "source": "./rules/database",
+            "category": "rules"
+        },
+        {
+            "name": "performance",
+            "description": "[RULE] Performance standards covering database queries, pagination, caching, lazy loading, timeouts, and connection pooling.",
+            "source": "./rules/performance",
+            "category": "rules"
+        },
+        {
+            "name": "security",
+            "description": "[RULE] Security standards covering secrets management, input validation, SQL injection prevention, data exposure, and transport security.",
+            "source": "./rules/security",
+            "category": "rules"
+        }
+    ]
 }

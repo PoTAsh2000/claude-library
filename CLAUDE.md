@@ -54,6 +54,74 @@ Skills and agents are designed to be framework-aware but not framework-locked �
 
 **Rules** use `alwaysApply: true` and should be concise, non-overlapping standards. Each rule file covers one domain (security, performance, database, etc.). Avoid cross-domain overlap between rule files.
 
+## Frontmatter Schema
+
+Each content file (`.md`) contains YAML frontmatter that defines metadata. The richer metadata lives in the content `.md` frontmatter; `plugin.json` stays minimal (name, description only).
+
+**`agent.md` frontmatter:**
+```yaml
+name: agent-name
+description: >-
+  Role and purpose. Include <example>context blocks</example> to show how this agent is invoked.
+model: inherit  # inherit (default, uses session model), haiku (fast/cheap), or opus (complex analysis)
+color: cyan     # Display color in Claude Code UI
+tools:          # List of available tools; use Agent(agent-name) syntax for inter-agent delegation
+  - Read
+  - Grep
+  - Agent(analyst)
+```
+
+**`SKILL.md` frontmatter:**
+```yaml
+name: skill-name
+description: >-
+  What this skill does. Include <example>usage</example>.
+user-invocable: true        # (Canonical: hyphen, not underscore)
+allowed-tools:              # Tools this skill can call
+  - Bash
+  - Read
+arguments:                  # Input args (optional)
+  - name: arg-name
+    description: What this arg does
+    required: true
+    argument-hint: "Shown in the / picker"
+model: haiku                # (Optional override; default: inherit)
+context: fork               # (Optional; isolates context window; use for lean/fast skills)
+```
+
+**`rule.md` frontmatter:**
+```yaml
+description: >-
+  Standards for this domain. No 'name' field needed.
+alwaysApply: true
+```
+
+**Model selection:**
+- `inherit` — Default; runs at whatever model the session uses.
+- `haiku` — Fast, cost-optimized tasks (e.g., `skills/commit` — just reads and stages).
+- `opus` — High-stakes analysis needing deep reasoning (e.g., `agents/software-architect`).
+
+**Note:** `skills/commit/SKILL.md` uses the non-canonical spelling `user_invocable` (underscore). New skills should use `user-invocable` (hyphen).
+
+## Plugin Registry: Backlog vs. Reality
+
+`marketplace.json` declares **39 plugins** but only **10 directories** currently exist in the repository. The manifest acts as a backlog/roadmap — when you plan a new plugin (skill, agent, or rule), add it to `marketplace.json` **before** creating the directory. This ensures the plugin is discoverable by Claude Code even while you're still authoring it.
+
+Missing plugins are intentional and planned; they are not errors to fix. (As of the last update, 29 of 39 entries are registered but have no files yet.)
+
+## Agent Dependencies and Context7 MCP
+
+Several plugins reference agents that don't yet have files. When authoring new agents or updating existing ones, maintain these cross-references:
+
+- `software-architect` agent invokes `Agent(analyst)`, `Agent(frontend-developer)`, and `Agent(security-reviewer)`.
+- `/review` skill recommends invoking `security-reviewer`, `qa-test-engineer`, and `software-architect` agents for comprehensive checks.
+
+**Context7 MCP Server:** All three existing agents (`backend-developer`, `frontend-developer`, `software-architect`) use `mcp__context7__resolve-library-id` and `mcp__context7__query-docs` tools. These require the `@upstash/context7-mcp` MCP server to be configured in Claude Code settings. Without it, those tool calls will silently fail. Document this dependency if adding a new agent that uses Context7.
+
+## Language and Locale
+
+The `readme` skill produces Dutch-language output (`Contactpersonen` table, `Processen` sections, Dutch description hints) for the target organization context. New skills targeting this same organization should follow the same Dutch-language convention.
+
 ## Git Conventions
 
 Commits follow Conventional Commits format: `type(scope): description`
