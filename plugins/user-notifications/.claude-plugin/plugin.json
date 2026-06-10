@@ -2,6 +2,5 @@
     "name": "user-notifications",
     "version": "1.0.0",
     "description": "Plays a sound when Claude Code requires user attention.",
-    "author": { "name": "PoTAsh2000" },
-    "hooks": "./hooks/hooks.json"
+    "author": { "name": "PoTAsh2000" }
 }
