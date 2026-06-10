@@ -1,0 +1,16 @@
+{
+  "description": "Intercept Read calls to Excel files and convert to markdown",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/pre_read_hook.py"
+          }
+        ]
+      }
+    ]
+  }
+}

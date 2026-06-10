@@ -65,6 +65,12 @@
             "description": "[RULE] Security standards covering secrets management, input validation, SQL injection prevention, data exposure, and transport security.",
             "source": "./rules/security",
             "category": "rules"
+        },
+        {
+            "name": "excel-reader",
+            "description": "[HOOK] Auto-converts Excel files (.xlsx/.xls/.xlsm) to markdown when Claude reads them. Activates automatically after plugin install.",
+            "source": "./hooks/excel-reader",
+            "category": "hooks"
         }
     ]
 }
