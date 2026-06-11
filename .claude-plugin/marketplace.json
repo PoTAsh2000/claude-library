@@ -1,7 +1,7 @@
 {
     "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
-    "name": "thomas-local-library",
-    "description": "Personal local tool library for Claude Code projects",
+    "name": "personal-claude-library",
+    "description": "Personal Git-hosted plugin library for Claude Code projects",
     "owner": {
         "name": "Thomas Arensman"
     },
