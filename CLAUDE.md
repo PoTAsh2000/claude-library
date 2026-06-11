@@ -133,7 +133,6 @@ Valid types: `feature`, `fix`, `refactor`, `performance`, `test`, `docs`, `style
 **`master` is protected.** A GitHub Ruleset named `protect-master` is active with these rules:
 
 - Restrict creations (cannot recreate master)
-- Restrict updates (no direct pushes at all, including fast-forward)
 - Restrict deletions
 - Block force pushes
 - Require a pull request before merging (0 required approvals, solo project)
