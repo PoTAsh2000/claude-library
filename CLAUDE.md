@@ -127,3 +127,50 @@ The `readme` skill produces Dutch-language output (`Contactpersonen` table, `Pro
 Commits follow Conventional Commits format: `type(scope): description`
 
 Valid types: `feature`, `fix`, `refactor`, `performance`, `test`, `docs`, `style`, `build`, `cicd`, `chore`
+
+## Branch Protection and Development Workflow
+
+**`master` is protected.** A GitHub Ruleset named `protect-master` is active with these rules:
+
+- Restrict creations (cannot recreate master)
+- Restrict updates (no direct pushes at all, including fast-forward)
+- Restrict deletions
+- Block force pushes
+- Require a pull request before merging (0 required approvals, solo project)
+
+**Why:** `master` is the live source for all marketplace consumers. Any direct push immediately affects every user who has this library installed. All changes must be validated via a real feature-branch install before landing on master.
+
+**Do not attempt to push directly to `master`** — it will be rejected. Use a feature branch.
+
+### Feature Branch Naming
+
+Follow the same prefix style as commit types:
+
+```
+feat/add-security-agent
+fix/commit-skill-staging-bug
+refactor/software-architect-phases
+docs/update-authoring-guidelines
+```
+
+### Feature Branch Testing (Remote Install)
+
+Claude Code resolves marketplace plugins from the raw GitHub URL, which encodes the branch name:
+
+```
+https://raw.githubusercontent.com/PoTAsh2000/claude-library/{branch}/.claude-plugin/marketplace.json
+```
+
+To test a feature branch before merging:
+
+1. Push the feature branch to remote: `git push -u origin feat/my-branch`
+2. In `~/.claude/settings.json`, add a temporary second entry to `extraKnownMarketplaces`:
+   ```json
+   {
+     "name": "personal-library (feat/my-branch)",
+     "sourceUrl": "https://raw.githubusercontent.com/PoTAsh2000/claude-library/feat/my-branch/.claude-plugin/marketplace.json"
+   }
+   ```
+3. Open the Claude Code marketplace browser, install and validate the plugin
+4. Remove the temporary entry from `settings.json` after testing (no cache clearing needed)
+5. Open a PR on GitHub and merge to `master` only after the install is confirmed working
