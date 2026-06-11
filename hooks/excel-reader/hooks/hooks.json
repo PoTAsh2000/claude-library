@@ -1,13 +1,12 @@
 {
-  "description": "Intercept Read calls to Excel files and convert to markdown",
+  "description": "Scan user prompts for Excel file references and inject converted markdown as context",
   "hooks": {
-    "PreToolUse": [
+    "UserPromptSubmit": [
       {
-        "matcher": "Read",
         "hooks": [
           {
             "type": "command",
-            "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/pre_read_hook.py\""
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/prompt_submit_hook.py"
           }
         ]
       }
