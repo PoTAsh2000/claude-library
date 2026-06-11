@@ -1,4 +1,4 @@
-﻿{
-    "name":  "commit",
-    "description":  "Detect current code changes with git, analyze what changed, then stage everything (git add ."
+{
+    "name": "commit",
+    "description": "Detect current code changes with git, analyze what changed, then stage everything (git add .) and create a Conventional Commits message (type(scope): description). Trigger: /commit, \"commit changes\", \"make a commit\", \"commit my work\"."
 }

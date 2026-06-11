@@ -5,7 +5,7 @@ description: >
   everything (git add .) and create a Conventional Commits message
   (type(scope): description). Trigger: /commit, "commit changes",
   "make a commit", "commit my work".
-user_invocable: true
+user-invocable: true
 model: haiku
 context: fork
 arguments:
@@ -17,7 +17,7 @@ allowed-tools:
   - Read
   - Glob
   - Grep
-argument-hint: "[message] (optional — auto-generated from the diff if omitted)"
+argument-hint: "[message] (optional, auto-generated from the diff if omitted)"
 ---
 
 # Commit Skill
