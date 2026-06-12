@@ -1,5 +1,5 @@
 {
-    "description": "Plays a sound when Claude Code requires user attention. Individual hooks can be disabled via config.txt in the plugin data directory; SessionStart only ensures that config file exists.",
+    "description": "Plays a per-hook sound when Claude Code requires user attention. Hooks can be disabled via config.txt and their sounds replaced via the sounds/ dir in the plugin data directory; SessionStart only ensures those defaults exist.",
     "hooks": {
         "SessionStart": [
             {

@@ -41,6 +41,34 @@ Rules:
 - The file lives outside the plugin install directory, so plugin updates
   never overwrite it. If you delete it, it is recreated with defaults.
 
+### Custom sounds
+
+Each hook plays its own `.wav` file, named after the hook key. On first run
+(and whenever a file is missing), the plugin seeds a `sounds/` directory next
+to `config.txt` with the bundled defaults:
+
+```
+~/.claude/plugins/data/user-notifications-<marketplace>/sounds/
+├── stop.wav
+├── notification-permission_prompt.wav
+├── notification-elicitation_dialog.wav
+└── notification-idle_prompt.wav
+```
+
+To change the sound for a hook, replace the matching file with your own
+`.wav`. The plugin resolves a hook's sound in this order:
+
+1. `…/data/…/sounds/<hook-key>.wav` — your customizable copy.
+2. The bundled default shipped with the plugin.
+3. A generic fallback sound, then a `winsound` beep if even that is missing.
+
+Rules:
+
+- The filename is the hook key (same key used in `config.txt`), plus `.wav`.
+- Custom sounds live in the data directory, so plugin updates never overwrite
+  them. Delete a file to have the default restored on the next run.
+- Use any standard PCM `.wav`; playback uses Windows `winsound`.
+
 ### Debugging
 
 Add `debug=enabled` to `config.txt` to log every hook decision to

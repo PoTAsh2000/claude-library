@@ -1,25 +1,38 @@
 """Plays a notification sound when Claude Code requires user attention.
 
-Each hook in hooks.json invokes this script. Before playing a sound, the
-script consults a user-editable config file in the plugin's persistent data
-directory (${CLAUDE_PLUGIN_DATA}, which survives plugin updates) so users can
-disable individual hooks without editing hooks.json.
+Each hook in hooks.json invokes this script. Two things are user-customizable,
+both stored in the plugin's persistent data directory (${CLAUDE_PLUGIN_DATA},
+which survives plugin updates):
+
+1. config.txt — toggle individual hooks on/off without editing hooks.json.
+2. sounds/    — a per-hook .wav file whose name matches the hook key (e.g.
+   stop.wav, notification-permission_prompt.wav). Drop in your own file to
+   change the sound for that event.
 
 Config format (config.txt): one `<hook-key>=enabled|disabled` pair per line.
 The hook key is derived from the hook payload Claude Code sends on stdin:
 the lowercased hook_event_name, plus `-<notification_type>` for Notification
-hooks (e.g. `stop`, `notification-idle_prompt`).
+hooks (e.g. `stop`, `notification-idle_prompt`). The same key is the basename
+of that hook's .wav file.
+
+Sound resolution order for a hook key: the user copy in
+${CLAUDE_PLUGIN_DATA}/sounds/<key>.wav, then the bundled default
+${CLAUDE_PLUGIN_ROOT}/sounds/<key>.wav, then the generic bundled fallback,
+and finally a winsound.Beep if no file is found.
 
 Claude Code has no plugin install/update lifecycle hooks, so the config file
-is created lazily: on every run, and at session start via the SessionStart
-hook (`ensure-config`), the file is written with defaults if it is missing.
-An existing file is never modified, so user edits survive plugin updates.
+and the data sounds directory are created lazily: on every run, and at session
+start via the SessionStart hook (`ensure-config`), missing defaults are
+written. Existing files are never modified, so user edits and custom sounds
+survive plugin updates.
 """
 import json
 import os
+import shutil
 import sys
 
 # Keys written to a freshly created config file, one per hook in hooks.json.
+# Each key is also the basename of that hook's default .wav file in sounds/.
 DEFAULT_CONFIG_KEYS = [
     "stop",
     "notification-permission_prompt",
@@ -37,8 +50,19 @@ ARGV_KEY_FALLBACK = {
     "idle": "notification-idle_prompt",
 }
 
+# Fallback beep frequency (Hz) per hook key when no .wav file can be resolved.
+BEEP_FREQUENCIES = {
+    "stop": 880,
+    "notification-permission_prompt": 1200,
+    "notification-elicitation_dialog": 1000,
+    "notification-idle_prompt": 700,
+}
+
 CONFIG_FILENAME = "config.txt"
 DEBUG_LOG_FILENAME = "notify.log"
+SOUNDS_DIRNAME = "sounds"
+# Generic bundled sound used when a hook has no keyed .wav of its own.
+GENERIC_SOUND_FILENAME = "notification-sound.wav"
 
 DEFAULT_CONFIG_TEMPLATE = """\
 # user-notifications plugin configuration
@@ -49,15 +73,35 @@ DEFAULT_CONFIG_TEMPLATE = """\
 # plugin updates (it is only recreated, with these defaults, if deleted).
 {keys}
 #
+# To change the sound for a hook, replace the matching .wav in the sounds/
+# directory next to this file (e.g. sounds/stop.wav). Custom sounds are never
+# overwritten by plugin updates.
+#
 # Uncomment to log every hook decision to notify.log in this directory:
 # debug=enabled
 """
+
+
+def get_plugin_root():
+    """The plugin install directory (parent of hooks/)."""
+    return os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def get_bundled_sounds_dir():
+    """The read-only sounds/ directory shipped with the plugin."""
+    return os.path.join(get_plugin_root(), SOUNDS_DIRNAME)
 
 
 def get_data_dir():
     """The plugin's persistent data directory, or None outside hook context."""
     data_dir = os.environ.get("CLAUDE_PLUGIN_DATA", "").strip()
     return data_dir or None
+
+
+def get_data_sounds_dir():
+    """The user-customizable sounds/ directory in the data dir, or None."""
+    data_dir = get_data_dir()
+    return os.path.join(data_dir, SOUNDS_DIRNAME) if data_dir else None
 
 
 def get_config_path():
@@ -75,6 +119,31 @@ def ensure_config(config_path):
     )
     with open(config_path, "w", encoding="utf-8", newline="\n") as f:
         f.write(content)
+
+
+def ensure_sounds(data_sounds_dir):
+    """Seeds the data sounds dir with bundled per-hook defaults.
+
+    Copies each `<key>.wav` from the bundled sounds dir into the data sounds
+    dir only when it is missing there, so user-supplied custom sounds are
+    never overwritten by a plugin update.
+    """
+    if data_sounds_dir is None:
+        return
+    bundled = get_bundled_sounds_dir()
+    try:
+        os.makedirs(data_sounds_dir, exist_ok=True)
+    except OSError:
+        return
+    for key in DEFAULT_CONFIG_KEYS:
+        src = os.path.join(bundled, key + ".wav")
+        dst = os.path.join(data_sounds_dir, key + ".wav")
+        if os.path.exists(dst) or not os.path.isfile(src):
+            continue
+        try:
+            shutil.copyfile(src, dst)
+        except OSError:
+            pass
 
 
 def load_config(config_path):
@@ -138,15 +207,35 @@ def log_debug(config, message):
         pass
 
 
-def play_sound(event):
-    plugin_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    sound_file = os.path.join(plugin_root, "sounds", "notification-sound.wav")
+def resolve_sound_file(key):
+    """Finds the .wav to play for a hook key, preferring the user's copy.
+
+    Order: the user-editable data dir copy, then the bundled per-hook default,
+    then the generic bundled fallback. Returns None if none exist (caller beeps).
+    """
+    data_sounds = get_data_sounds_dir()
+    if data_sounds:
+        candidate = os.path.join(data_sounds, key + ".wav")
+        if os.path.isfile(candidate):
+            return candidate
+    bundled = get_bundled_sounds_dir()
+    candidate = os.path.join(bundled, key + ".wav")
+    if os.path.isfile(candidate):
+        return candidate
+    generic = os.path.join(bundled, GENERIC_SOUND_FILENAME)
+    if os.path.isfile(generic):
+        return generic
+    return None
+
+
+def play_sound(key, event):
+    sound_file = resolve_sound_file(key)
     try:
         import winsound
-        if os.path.exists(sound_file):
+        if sound_file and os.path.exists(sound_file):
             winsound.PlaySound(sound_file, winsound.SND_FILENAME)
         else:
-            winsound.Beep(1200 if event == "permission" else 880, 300)
+            winsound.Beep(BEEP_FREQUENCIES.get(key, 1200 if event == "permission" else 880), 300)
     except Exception:
         pass
 
@@ -155,7 +244,8 @@ def main():
     event = sys.argv[1] if len(sys.argv) > 1 else "stop"
     config_path = get_config_path()
     ensure_config(config_path)
-    # The SessionStart hook only guarantees the config file exists.
+    ensure_sounds(get_data_sounds_dir())
+    # The SessionStart hook only guarantees the config file and sounds exist.
     if event == "ensure-config":
         return
     config = load_config(config_path)
@@ -164,7 +254,7 @@ def main():
     enabled = is_hook_enabled(config, key)
     log_debug(config, "event=%s key=%s enabled=%s" % (event, key, enabled))
     if enabled:
-        play_sound(event)
+        play_sound(key, event)
 
 
 if __name__ == "__main__":
