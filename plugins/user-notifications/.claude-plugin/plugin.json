@@ -1,6 +1,6 @@
 {
     "name": "user-notifications",
-    "version": "1.0.0",
-    "description": "Plays a sound when Claude Code requires user attention.",
+    "version": "1.1.0",
+    "description": "Plays a sound when Claude Code requires user attention. Individual hooks can be toggled via a config file that survives plugin updates.",
     "author": { "name": "PoTAsh2000" }
 }
