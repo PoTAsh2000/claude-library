@@ -68,9 +68,9 @@
         },
         {
             "name": "excel-reader",
-            "description": "[HOOK] Auto-converts Excel files (.xlsx/.xls/.xlsm) to markdown when Claude reads them. Activates automatically after plugin install.",
-            "source": "./hooks/excel-reader",
-            "category": "hooks"
+            "description": "[PLUGIN] Auto-converts Excel files (.xlsx/.xls/.xlsm) to markdown when Claude reads them, via a hook + Python script. Activates automatically after plugin install.",
+            "source": "./plugins/excel-reader",
+            "category": "plugins"
         },
         {
             "name": "user-notifications",
