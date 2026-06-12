@@ -1,6 +1,0 @@
-{
-    "name": "user-notifications",
-    "version": "1.2.0",
-    "description": "Plays a per-hook sound when Claude Code requires user attention. Each hook's sound is customizable, and hooks can be toggled, via files that survive plugin updates.",
-    "author": { "name": "PoTAsh2000" }
-}
