@@ -1,4 +1,4 @@
 {
     "name": "user-notifications",
-    "description": "Plays a sound when Claude Code requires user attention — permission prompts, turn completions, and idle prompts."
+    "description": "Plays a per-hook sound when Claude Code requires user attention — permission prompts, turn completions, and idle prompts."
 }
