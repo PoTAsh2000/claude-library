@@ -1,4 +1,5 @@
 {
   "name": "excel-reader",
+  "version": "1.0.0",
   "description": "Auto-intercept Excel file reads and convert to markdown via Python"
 }

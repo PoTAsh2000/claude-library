@@ -1,4 +1,5 @@
 ﻿{
     "name":  "mapper",
+    "version": "1.0.0",
     "description":  "Generate a Java mapper/translator method that maps fields from a source model to a target model"
 }
