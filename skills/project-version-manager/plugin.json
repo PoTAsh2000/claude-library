@@ -1,4 +1,5 @@
 {
     "name": "project-version-manager",
+    "version": "1.0.0",
     "description": "[SKILL] Increment the project version (major/minor/patch) following semantic versioning rules. Detects the version file automatically (pom.xml, package.json, build.gradle, etc.), proposes the correct bump based on git changes or an explicit argument, and applies it."
 }
