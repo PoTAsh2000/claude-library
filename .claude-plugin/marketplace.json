@@ -31,6 +31,12 @@
             "category": "skills"
         },
         {
+            "name": "project-version-manager",
+            "description": "[SKILL] Increment the project version (major/minor/patch) following semantic versioning rules. Detects the version file automatically (pom.xml, package.json, build.gradle, etc.), proposes the correct bump based on git changes or an explicit argument, and applies it.",
+            "source": "./skills/project-version-manager",
+            "category": "skills"
+        },
+        {
             "name": "backend-developer",
             "description": "[AGENT] Handle backend Java development tasks including creating services, processors, transformers, mappers, routes, configurations, tests, and refactoring across any Java project type.",
             "source": "./agents/backend-developer",
