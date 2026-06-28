@@ -1,0 +1,5 @@
+{
+    "name": "readme",
+    "version": "1.0.0",
+    "description": "Use this agent to generate, create, or update README.md files for any project type. Detects project type and audience, then derives the right sections and standards from that context."
+}
