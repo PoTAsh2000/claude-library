@@ -19,16 +19,10 @@
             "category": "skills"
         },
         {
-            "name": "mapper",
-            "description": "[SKILL] Generate a Java mapper/translator method that maps fields from a source model to a target model.",
-            "source": "./skills/mapper",
-            "category": "skills"
-        },
-        {
             "name": "readme",
-            "description": "[SKILL] Generate, create, or update README documentation for your project.",
-            "source": "./skills/readme",
-            "category": "skills"
+            "description": "[AGENT] Generate, create, or update README documentation for any project type. Detects project type and audience, selects the right sections, and produces clean, scannable, maintainable READMEs.",
+            "source": "./agents/readme",
+            "category": "agents"
         },
         {
             "name": "project-version-manager",
